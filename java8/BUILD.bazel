@@ -1,0 +1,37 @@
+javacopts = [
+    "-source 8",
+    "-target 8",
+]
+
+java_library(
+    name = "java8",
+    srcs = glob([
+        "src/main/java/**/*.java"
+    ]),
+    javacopts = javacopts
+)
+
+
+java_library(
+    name = "tests",
+    srcs = glob([
+        "src/test/java/**/*.java"
+    ]),
+    deps = [
+        ":java8",
+
+        "//lib/junit-4"
+    ],
+    testonly = True,
+    javacopts = javacopts
+)
+
+
+java_test(
+    name = "run_tests",
+    test_class = "sample.java8.AllTests",
+    runtime_deps = [
+        ":tests",
+    ],
+    size = "small",
+)
